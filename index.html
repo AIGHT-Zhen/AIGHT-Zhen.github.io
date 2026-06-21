@@ -3,145 +3,195 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AIGHT-Zhen | 星海浩瀚 · 笔墨为舟</title>
-<meta name="description" content="AIGHT-Zhen - 在数字星海中，用笔墨勾勒山海的轮廓。科技是手段，意境是归宿。">
-<meta name="theme-color" content="#060a14">
-<meta name="color-scheme" content="dark">
-
-<!-- Preconnect for Google Fonts -->
+<title>星海浩瀚 · 笔墨为舟</title>
+<meta name="description" content="AIGHT-Zhen - 个人主页">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<!-- Google Fonts: Noto Serif SC (思源宋体) -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-
-<!-- Stylesheets -->
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/ink.css">
-<link rel="stylesheet" href="css/responsive.css">
+<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
-<!-- ============================================================
-     Layer 0: Three.js Particle Canvas (Background)
-     ============================================================ -->
-<canvas id="particle-canvas"></canvas>
+<!-- #33 变形水滴装饰 -->
+<div class="blob-decor a"></div>
+<div class="blob-decor b"></div>
+<div class="blob-decor c"></div>
 
-<!-- ============================================================
-     Layer 1: Ink Overlay
-     ============================================================ -->
-<div class="ink-overlay" aria-hidden="true">
-  <div class="ink-blob"></div>
-  <div class="ink-blob"></div>
-  <div class="ink-blob"></div>
-  <div class="ink-blob"></div>
-</div>
+<!-- #10 动态雾效 -->
+<div class="fog-layer"></div>
 
-<!-- ============================================================
-     Layer 2: SVG Mountain Silhouettes
-     ============================================================ -->
-<div class="mountain-decor bottom-left" aria-hidden="true">
-  <svg viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0 200 L0 120 L45 75 L80 100 L130 40 L175 85 L220 50 L260 90 L320 55 L320 200Z"
-          fill="rgba(20,25,40,0.6)" stroke="rgba(100,130,160,0.15)" stroke-width="0.5"/>
-    <path d="M0 200 L0 140 L60 100 L110 125 L160 70 L210 110 L270 65 L320 95 L320 200Z"
-          fill="rgba(15,18,30,0.4)"/>
-    <path d="M0 200 L0 165 L50 130 L100 155 L180 105 L250 145 L320 120 L320 200Z"
-          fill="rgba(10,12,22,0.5)"/>
-  </svg>
-</div>
-<div class="mountain-decor top-right" aria-hidden="true">
-  <svg viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M260 0 L260 55 L220 80 L180 50 L140 90 L95 55 L50 85 L0 40 L0 0Z"
-          fill="rgba(25,20,35,0.4)" stroke="rgba(100,130,160,0.1)" stroke-width="0.5"/>
-    <path d="M260 0 L260 35 L210 60 L160 30 L110 65 L60 35 L0 60 L0 0Z"
-          fill="rgba(20,16,28,0.35)"/>
-  </svg>
-</div>
+<div class="transition-overlay" id="transitionOverlay"></div>
 
-<!-- ============================================================
-     Layer 4: Color Shift Indicator (Easter Egg)
-     ============================================================ -->
-<div class="color-shift-indicator" aria-hidden="true"></div>
+<main class="scroll-container" id="scrollContainer">
 
-<!-- ============================================================
-     Layer 10: Ripple Container
-     ============================================================ -->
-<div class="ripple-container" id="rippleContainer" aria-hidden="true"></div>
-
-<!-- ============================================================
-     Layer 100: Easter Egg Flash Text
-     ============================================================ -->
-<div class="easter-egg-flash" id="easterEggFlash" aria-live="polite"></div>
-
-<!-- ============================================================
-     Hero Section
-     ============================================================ -->
-<section class="section hero-section" id="home">
-  <div class="hero-content">
-    <div class="hero-name-wrapper" data-text="AIGHT-Zhen">
-      <h1 class="hero-name">AIGHT-Zhen</h1>
+  <!-- ========== 第一屏：引子 ========== -->
+  <section class="screen hero-screen" id="screen1">
+    <!-- #11 3D倾斜 + #12 液态玻璃 -->
+    <div class="glass-card tilt-card hero-card">
+      <span class="fx-badge">#11 #12</span>
+      <!-- #20 墨迹显现 -->
+      <h1 class="slogan">星海浩瀚 · 笔墨为舟</h1>
+      <!-- #24 彩虹流动 -->
+      <p class="slogan-sub">在代码与意境之间，构筑数字山海</p>
     </div>
-    <p class="hero-slogan">星海浩瀚 · 笔墨为舟</p>
-    <p class="hero-subtitle">在代码与意境之间，构筑数字山海</p>
-  </div>
-  <div class="hero-scroll-hint" aria-hidden="true">
-    <span>向下探索</span>
-    <div class="scroll-arrow"></div>
-  </div>
-</section>
-
-<!-- ============================================================
-     About Section
-     ============================================================ -->
-<section class="section about-section" id="about">
-  <div class="about-backdrop" aria-hidden="true"></div>
-  <div class="about-content">
-    <p class="about-label">· 关 于 ·</p>
-    <p class="about-text">
-      目标<span class="emph">全栈开发者</span>！
-    </p>
-    <div class="about-divider"></div>
-    <a href="https://github.com/AIGHT-Zhen" target="_blank" rel="noopener" class="about-entry">
-      探索项目 →
-    </a>
-  </div>
-</section>
-
-<!-- ============================================================
-     Footer / Contact Section
-     ============================================================ -->
-<section class="section footer-section" id="contact">
-  <div class="footer-content">
-    <div class="footer-links">
-      <a href="https://github.com/AIGHT-Zhen" target="_blank" rel="noopener" class="footer-link">GitHub</a>
-      <a href="mailto:aightzhen@github.com" class="footer-link">邮箱</a>
-      <a href="#home" class="footer-link">回到顶部</a>
+    <div class="scroll-hint">
+      <span>向下探索</span>
+      <div class="scroll-arrow"></div><!-- #23 渐隐呼吸 -->
     </div>
-    <p class="footer-motto">「在数字星海中，用笔墨勾勒山海的轮廓。科技是手段，意境是归宿。」</p>
-    <p class="footer-copy">&copy; 2026 AIGHT-Zhen</p>
-  </div>
-</section>
+  </section>
 
-<!-- ============================================================
-     JavaScript — 按依赖顺序加载（支持 file:// 协议）
-     ============================================================ -->
-<!-- Three.js CDN -->
-<script src="https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js"></script>
-<!-- 配置与工具 -->
-<script src="js/config.js"></script>
-<script src="js/utils.js"></script>
-<!-- Three.js 场景 -->
-<script src="js/scene.js"></script>
-<!-- 粒子系统 -->
-<script src="js/particles.js"></script>
-<!-- 视觉特效 -->
+  <!-- ========== 第二屏：风格入口 4x3 ========== -->
+  <section class="screen about-screen" id="screen2">
+    <div class="style-grid">
+    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
+      <span class="fx-badge">#11 #12</span>
+      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">赛博朋克</p>
+      <button class="btn-jump" data-href="subpages/cyberpunk.html"></button>
+    </div>
+    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
+      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">粗野主义</p>
+      <button class="btn-jump" data-href="subpages/brutalist.html"></button>
+    </div>
+    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
+      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">复古像素</p>
+      <button class="btn-jump" data-href="subpages/retro.html"></button>
+    </div>
+    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
+      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">极致留白</p>
+      <button class="btn-jump" data-href="subpages/minimal.html"></button>
+    </div>
+    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
+      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">暗夜霓虹</p>
+      <button class="btn-jump" data-href="subpages/neon.html"></button>
+    </div>
+    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
+      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">全息投影</p>
+      <button class="btn-jump" data-href="subpages/hologram.html"></button>
+    </div>
+    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
+      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">报纸编辑</p>
+      <button class="btn-jump" data-href="subpages/newspaper.html"></button>
+    </div>
+    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
+      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">梦幻粉彩</p>
+      <button class="btn-jump" data-href="subpages/pastel.html"></button>
+    </div>
+    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
+      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">工业暗黑</p>
+      <button class="btn-jump" data-href="subpages/industrial.html"></button>
+    </div>
+    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
+      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">装饰艺术</p>
+      <button class="btn-jump" data-href="subpages/artdeco.html"></button>
+    </div>
+    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
+      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">手绘素描</p>
+      <button class="btn-jump" data-href="subpages/sketch.html"></button>
+    </div>
+    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
+      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">终端命令行</p>
+      <button class="btn-jump" data-href="subpages/terminal.html"></button>
+    </div>
+    </div>
+  </section>
+
+  <!-- ========== 第三屏：特效展示区 ========== -->
+  <section class="screen fx-showcase" id="screen3" style="flex-direction:column;gap:12px">
+
+    <!-- 原有效果 -->
+    <div class="glass-card" style="max-width:700px;padding:28px 36px;text-align:center">
+      <p style="font-size:.75rem;color:#4a6a80;letter-spacing:.15em;margin-bottom:16px">#16~#34 原有效果</p>
+      <button class="btn-fill" style="margin:4px">#16 液面填充</button>
+      <button class="btn-aurora" style="margin:4px">#17 极光按钮</button>
+      <button class="btn-glitch" data-text="#18 故障效果" style="margin:4px">#18 故障效果</button>
+      <span class="typewriter" style="display:inline-block;font-size:.78rem;color:#6b8a9a;vertical-align:middle;margin:0 8px">#21 打字机...</span>
+      <span class="glitch-text" data-text="#22 故障文字" style="font-size:.78rem;color:#6b8a9a;margin:0 8px">#22 故障文字</span>
+      <span class="svg-distort" style="font-size:.78rem;color:#6b8a9a;margin:0 8px;display:inline-block">#34 SVG扭曲</span>
+    </div>
+
+    <!-- ====== 新风格特效 #36-#55 ====== -->
+
+    <!-- #36 赛博朋克 -->
+    <div class="card-cyberpunk" style="max-width:400px;text-align:center">
+      <span class="fx-badge" style="color:#0ff">#36</span>
+      CYBERPUNK NEON CARD
+      <p style="font-size:.65rem;opacity:.7;margin-top:6px;text-transform:none;letter-spacing:.05em">赛博朋克霓虹卡片 · 荧光脉冲</p>
+    </div>
+
+    <!-- #37 粗野主义 -->
+    <div style="background:#f0f0f0;padding:20px;border-radius:0;max-width:400px;text-align:center">
+      <span class="fx-badge" style="color:#111">#37</span>
+      <span class="text-brutalist" style="font-size:1.4rem">BRUTALIST</span>
+      <p style="font-size:.6rem;color:#555;margin-top:6px">粗野主义文字 · 黄底黑框硬阴影</p>
+    </div>
+
+    <!-- #38 复古像素 -->
+    <div style="background:#111;padding:20px;border-radius:0;max-width:400px;text-align:center">
+      <span class="fx-badge" style="color:#0f0">#38</span>
+      <button class="btn-retro">PIXEL BUTTON</button>
+      <p style="font-size:.6rem;color:#0f0;margin-top:6px;font-family:'Courier New',monospace">复古像素按钮 · 仿Win95凸起边框</p>
+    </div>
+
+    <!-- #39 刮刮卡 -->
+    <div style="background:#fafafa;padding:16px;border-radius:8px;max-width:400px;text-align:center">
+      <span class="fx-badge">#39</span>
+      <div class="scratch-card" onclick="this.classList.toggle('scratched')">
+        <span class="hidden">🎁 你发现了秘密！</span>
+        <div class="cover">点击刮开</div>
+      </div>
+    </div>
+
+    <!-- #40 魔法棒 -->
+    <div style="background:#1a1a2e;padding:20px;border-radius:12px;max-width:400px;text-align:center">
+      <span class="fx-badge" style="color:#f0f">#40</span>
+      <span class="magic-hover" style="color:#ccc">✨ 悬停我 ✨</span>
+      <p style="font-size:.6rem;color:#888;margin-top:6px">魔法棒悬停 · 彩虹旋转光晕</p>
+    </div>
+
+    <!-- #41 页面卷角 -->
+    <div class="corner-curl" style="max-width:400px;text-align:center">
+      <span class="fx-badge">#41</span>
+      <p style="font-size:.8rem;color:#555">页面卷角效果</p>
+      <p style="font-size:.6rem;color:#999">悬停时右下角卷起更多</p>
+    </div>
+
+    <!-- #43 黏糊糊 + #44 3D波浪 + #45 霓虹开关 + #47 火花 -->
+    <div class="glass-card" style="max-width:500px;padding:24px;text-align:center">
+      <p style="font-size:.7rem;color:#4a6a80;letter-spacing:.1em;margin-bottom:14px">#43 #44 #45 #47 #50</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap">
+        <button class="btn-gooey">#43 黏糊糊</button>
+        <div class="wave-3d">
+          <span style="--d:0s"></span><span style="--d:.15s"></span><span style="--d:.3s"></span>
+          <span style="--d:.45s"></span><span style="--d:.6s"></span>
+        </div>
+        <div class="toggle-neon on" style="flex-shrink:0" onclick="this.classList.toggle('on')"></div>
+        <button class="btn-spark" onclick="sparkBurst(event)">#47 火花</button>
+        <div class="pulse-ring"><span style="font-size:.55rem;color:#4a6a80">#50</span></div>
+      </div>
+    </div>
+
+    <!-- #48 单词裂开 + #51 全息 + #52 热感 + #53 彩虹 + #54 水墨 + #49 齿轮 -->
+    <div class="glass-card" style="max-width:550px;padding:24px;text-align:center">
+      <p style="font-size:.7rem;color:#4a6a80;letter-spacing:.1em;margin-bottom:14px">#48 #49 #51 #52 #53 #54</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap">
+        <span class="split-word">
+          <span class="split-char" style="animation-delay:0s">S</span><span class="split-char" style="animation-delay:.05s">P</span><span class="split-char" style="animation-delay:.1s">L</span><span class="split-char" style="animation-delay:.15s">I</span><span class="split-char" style="animation-delay:.2s">T</span>
+        </span>
+        <div class="css-gear"></div>
+        <div class="card-hologram" style="padding:14px 18px"><span style="font-size:.7rem;color:#889">#51 全息</span></div>
+        <span class="heat-distort" style="font-size:.85rem;color:#c44">#52 热感扭曲</span>
+        <span class="rainbow-mask" style="font-size:1.1rem">#53 彩虹</span>
+        <span class="ink-drop" style="font-size:.8rem;color:#555">#54 水墨滴</span>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<script src="js/scroll-snap.js"></script>
+<script src="js/page-transition.js"></script>
 <script src="js/effects.js"></script>
-<!-- 交互系统 -->
-<script src="js/interactions.js"></script>
-<!-- 键盘彩蛋 -->
-<script src="js/easter-egg.js"></script>
-<!-- 主入口 -->
 <script src="js/main.js"></script>
 
 </body>

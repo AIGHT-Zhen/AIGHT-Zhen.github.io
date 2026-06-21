@@ -1,0 +1,29 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>AIGHT-Zhen · 终端命令行</title>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;font-family:'Courier New',monospace;background:#0c0c0c;color:#0f0;overflow-x:hidden}
+.page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.btn-back{position:fixed;top:20px;left:20px;z-index:10;background:#0c0c0c;border:1px solid #333;color:#0f0;font-family:inherit;font-size:.8rem;cursor:pointer;padding:6px 14px;transition:all .3s}
+.btn-back:hover{background:#1a1a1a;border-color:#0f0}
+.terminal{max-width:580px;width:100%;border:1px solid #333;border-radius:4px;background:#0c0c0c;overflow:hidden}
+.term-header{background:#1a1a1a;padding:8px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #333}
+.term-dot{width:10px;height:10px;border-radius:50%}
+.term-dot.r{background:#ff5f57}.term-dot.y{background:#febc2e}.term-dot.g{background:#28c840}
+.term-title{color:#666;font-size:.65rem;margin-left:8px}
+.term-body{padding:28px 24px;line-height:1.9;font-size:.8rem}
+.prompt{color:#0f0}.prompt::before{content:'$ ';color:#0a0}
+.output{color:#aaa;margin:4px 0 16px}
+.output em{color:#ff0;font-style:normal}
+.cursor{display:inline-block;width:8px;height:15px;background:#0f0;animation:blink 1s step-end infinite;vertical-align:text-bottom}
+@keyframes blink{50%{opacity:0}}
+.links{display:flex;gap:14px;margin-top:16px;flex-wrap:wrap}
+.link{color:#0a0;text-decoration:none;font-size:.7rem;transition:all .3s}
+.link:hover{color:#0f0;text-decoration:underline}
+.link::before{content:'> ';color:#555}
+</style></head><body>
+<div class="page"><button class="btn-back" onclick="history.back()">←</button>
+<div class="terminal"><div class="term-header"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">aight-zhen@home — bash</span></div><div class="term-body">
+<p class="prompt">whoami</p><p class="output"><em>AIGHT-Zhen</em> — 星海浩瀚 · 笔墨为舟</p>
+<p class="prompt">cat about.txt</p><p class="output">在代码与意境之间，构筑数字山海<span class="cursor"></span></p>
+<div class="links"><a class="link" href="https://github.com/AIGHT-Zhen" target="_blank">github</a><a class="link" href="mailto:aightzhen@github.com">email</a><a class="link" href="../index.html">home</a></div>
+</div></div>
+</div></body></html>

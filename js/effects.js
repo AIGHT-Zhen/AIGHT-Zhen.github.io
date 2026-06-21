@@ -1,229 +1,228 @@
 /* ============================================================
-   effects.js — 视觉特效（命名空间: AZ.effects）
+   effects.js — JS 交互特效合集
+   #1星尘光标 #3霓虹光标 #8星座连线 #11 3D倾斜 #19波纹扩散
    ============================================================ */
-window.AZ = window.AZ || {};
+(function(){
+'use strict';
 
-(function() {
-  'use strict';
+// ============================================================
+// #1 星尘拖尾光标 — Canvas 粒子轨迹
+// ============================================================
+(function initSparkleCursor(){
+  var canvas=document.createElement('canvas');
+  canvas.id='sparkleCanvas';
+  document.body.appendChild(canvas);
+  var ctx=canvas.getContext('2d');
+  var W,H;
+  var mouse={x:0,y:0,targetX:0,targetY:0};
+  var particles=[];
+  var MAX=40;
 
-  const THREE = window.THREE;
-  const U = window.AZ.utils;
-  const TIMING = window.AZ.config.TIMING;
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
 
-  // --- 星云 ---
-  function createNebulae(scene, count) {
-    var nebulae = [];
+  document.addEventListener('mousemove',function(e){mouse.targetX=e.clientX;mouse.targetY=e.clientY});
+  document.addEventListener('touchmove',function(e){if(e.touches.length>0){mouse.targetX=e.touches[0].clientX;mouse.targetY=e.touches[0].clientY}},{passive:true});
 
-    for (var i = 0; i < count; i++) {
-      var size = U.rand(6, 14);
-      var nebulaGeo = new THREE.PlaneGeometry(size, size * U.rand(0.5, 0.8));
-
-      var nebulaColor = new THREE.Color();
-      if (i % 2 === 0) nebulaColor.setHSL(0.58, 0.35, 0.3);
-      else nebulaColor.setHSL(0.12, 0.4, 0.25);
-
-      var nebulaMat = new THREE.ShaderMaterial({
-        uniforms: {
-          uTime: { value: 0 },
-          uColor: { value: nebulaColor },
-          uOpacity: { value: 0.06 + U.rand(0.02, 0.08) },
-        },
-        vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
-        fragmentShader: [
-          'varying vec2 vUv; uniform float uTime; uniform vec3 uColor; uniform float uOpacity;',
-          'void main() {',
-          '  float dist = length(vUv - 0.5) * 2.0;',
-          '  float alpha = smoothstep(1.0, 0.0, dist) * uOpacity;',
-          '  alpha *= 0.6 + 0.4 * sin(uTime*0.3 + vUv.x*4.0) * cos(uTime*0.25 + vUv.y*3.0);',
-          '  gl_FragColor = vec4(uColor, alpha);',
-          '}'
-        ].join('\n'),
-        transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-      });
-
-      var nebula = new THREE.Mesh(nebulaGeo, nebulaMat);
-      nebula.position.set(U.rand(-7, 7), U.rand(-4, 4), U.rand(-3, -1.5));
-      nebula.rotation.z = U.rand(0, Math.PI * 2);
-      nebula.userData = {
-        rotSpeed: U.rand(-0.08, 0.08),
-        driftX: U.rand(-0.15, 0.15),
-        driftY: U.rand(-0.1, 0.1),
-        baseX: nebula.position.x,
-        baseY: nebula.position.y,
-      };
-
-      scene.add(nebula);
-      nebulae.push(nebula);
-    }
-    return nebulae;
+  function spawn(){
+    mouse.x+=(mouse.targetX-mouse.x)*.3;mouse.y+=(mouse.targetY-mouse.y)*.3;
+    particles.push({x:mouse.x+(Math.random()-.5)*6,y:mouse.y+(Math.random()-.5)*6,
+      vx:(Math.random()-.5)*1.5,vy:(Math.random()-.5)*1.5,
+      life:1,decay:.015+Math.random()*.03,size:2+Math.random()*3,
+      hue:190+Math.random()*30});
+    if(particles.length>MAX)particles.shift();
   }
 
-  function updateNebulae(nebulae, time, mouseWorld) {
-    for (var i = 0; i < nebulae.length; i++) {
-      var n = nebulae[i];
-      n.material.uniforms.uTime.value = time;
-      n.position.x = n.userData.baseX + mouseWorld.x * 0.3;
-      n.position.y = n.userData.baseY + mouseWorld.y * 0.2;
-      n.rotation.z += n.userData.rotSpeed * 0.01;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=particles.length-1;i>=0;i--){
+      var p=particles[i];p.x+=p.vx;p.y+=p.vy;p.life-=p.decay;
+      if(p.life<=0){particles.splice(i,1);continue}
+      ctx.beginPath();ctx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2);
+      ctx.fillStyle='hsla('+p.hue+',40%,70%,'+(p.life*.6)+')';ctx.fill();
     }
+    requestAnimationFrame(draw);
+  }
+  setInterval(spawn,25);
+  draw();
+})();
+
+// ============================================================
+// #8 星座连线 — 随机光点 + 鼠标靠近自动连线
+// ============================================================
+(function initConstellation(){
+  var canvas=document.createElement('canvas');
+  canvas.style.cssText='position:fixed;top:0;left:0;z-index:0;pointer-events:none;opacity:.5';
+  document.body.appendChild(canvas);
+  var ctx=canvas.getContext('2d');
+  var W,H,stars=[],mx=0,my=0,COUNT=45;
+
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
+
+  for(var i=0;i<COUNT;i++){
+    stars.push({x:Math.random()*3000,y:Math.random()*2000,r:.5+Math.random()*1.5,twinkle:Math.random()*Math.PI*2});
   }
 
-  // --- 3D 涟漪 ---
-  function createRippleParticles(origin3D, count) {
-    var positions = new Float32Array(count * 3);
-    var sizes = new Float32Array(count);
-
-    var ringColor = new THREE.Color().lerpColors(
-      new THREE.Color(0xa0c8dd), new THREE.Color(0xdce4f0), Math.random()
-    );
-
-    for (var i = 0; i < count; i++) {
-      var angle = (i / count) * Math.PI * 2;
-      positions[i*3] = origin3D.x + Math.cos(angle) * 0.03;
-      positions[i*3+1] = origin3D.y + Math.sin(angle) * 0.03;
-      positions[i*3+2] = origin3D.z;
-      sizes[i] = 0.012 + Math.random() * 0.028;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var t=performance.now()/1000;
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];var sx=s.x,sy=s.y;
+      var alpha=.3+.15*Math.sin(t*2+s.twinkle);
+      ctx.beginPath();ctx.arc(sx,sy,s.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(160,200,220,'+alpha+')';ctx.fill();
     }
+    // 连线
+    for(var j=0;j<stars.length;j++){
+      var s1=stars[j];
+      var d1=Math.sqrt((s1.x-mx)*(s1.x-mx)+(s1.y-my)*(s1.y-my));
+      if(d1<180){
+        ctx.beginPath();ctx.moveTo(s1.x,s1.y);ctx.lineTo(mx,my);
+        ctx.strokeStyle='rgba(160,200,220,'+(.15*(1-d1/180))+')';ctx.lineWidth=.4;ctx.stroke();
+      }
+      for(var k=j+1;k<stars.length;k++){
+        var s2=stars[k];
+        var d2=Math.sqrt((s1.x-s2.x)*(s1.x-s2.x)+(s1.y-s2.y)*(s1.y-s2.y));
+        if(d2<140){
+          ctx.beginPath();ctx.moveTo(s1.x,s1.y);ctx.lineTo(s2.x,s2.y);
+          ctx.strokeStyle='rgba(160,200,220,'+(.08*(1-d2/140))+')';ctx.lineWidth=.3;ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
 
-    var geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-    var mat = new THREE.PointsMaterial({
-      size: 0.08, map: U.getGlowTexture(), color: ringColor,
-      transparent: true, opacity: 0.7, depthWrite: false, blending: THREE.AdditiveBlending,
+// ============================================================
+// #11 3D倾斜卡片
+(function initTiltCards(){
+  document.querySelectorAll('.tilt-card').forEach(function(card){
+    card.addEventListener('mousemove',function(e){
+      var rect=card.getBoundingClientRect();
+      var x=(e.clientX-rect.left)/rect.width-.5;
+      var y=(e.clientY-rect.top)/rect.height-.5;
+      card.style.transform='rotateY('+(x*12)+'deg) rotateX('+(-y*10)+'deg)';
     });
+    card.addEventListener('mouseleave',function(){card.style.transform='rotateY(0) rotateX(0)';card.style.transition='transform .6s cubic-bezier(.22,.61,.36,1)'});
+    card.addEventListener('mouseenter',function(){card.style.transition='transform .1s ease-out'});
+  });
+})();
 
-    var points = new THREE.Points(geo, mat);
-    return {
-      points: points, geometry: geo, material: mat,
-      origin: { x: origin3D.x, y: origin3D.y, z: origin3D.z },
-      birthTime: performance.now() / 1000, lifetime: TIMING.rippleLifetime,
-      count: count, alive: true,
-    };
-  }
+// #19 波纹扩散 — 点击按钮时从点击处扩散涟漪
+// ============================================================
+(function initRipple(){
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest('.btn-jump');
+    if(!btn)return;
+    var ring=document.createElement('div');
+    ring.className='ripple-ring go';
+    btn.appendChild(ring);
+    ring.addEventListener('animationend',function(){ring.remove()});
+  });
+})();
 
-  function updateRippleParticles(rippleSystems, time, rippleGroup) {
-    for (var s = rippleSystems.length - 1; s >= 0; s--) {
-      var sys = rippleSystems[s];
-      var age = time - sys.birthTime;
+// ============================================================
+// #2 丝绸流体光标（在星尘基础上额外叠加一条流体线）
+// ============================================================
+(function initSilkTrail(){
+  var canvas=document.createElement('canvas');
+  canvas.style.cssText='position:fixed;top:0;left:0;z-index:9998;pointer-events:none;opacity:.35';
+  document.body.appendChild(canvas);
+  var ctx=canvas.getContext('2d');
+  var W,H,trail=[],MAX_TRAIL=25;
+  var mx=0,my=0;
 
-      if (age > sys.lifetime) {
-        rippleGroup.remove(sys.points);
-        sys.geometry.dispose();
-        sys.material.dispose();
-        sys.alive = false;
-        rippleSystems.splice(s, 1);
-        continue;
-      }
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY});
 
-      var progress = age / sys.lifetime;
-      var expandR = progress * 5.5;
-      sys.material.opacity = (1 - progress) * 0.7;
-      sys.material.size = 0.08 * (1 - progress * 0.5);
+  function draw(){
+    trail.push({x:mx,y:my,life:1});
+    if(trail.length>MAX_TRAIL)trail.shift();
+    for(var i=trail.length-1;i>=0;i--){trail[i].life-=.03;if(trail[i].life<=0){trail.splice(i,1);continue}}
 
-      var rPosArr = sys.geometry.attributes.position.array;
-      for (var j = 0; j < sys.count; j++) {
-        var j3 = j * 3;
-        var baseAngle = (j / sys.count) * Math.PI * 2;
-        var spiralAngle = baseAngle + progress * 3.5;
-        var r = expandR * (0.5 + 0.5 * (j / sys.count));
-        rPosArr[j3] = sys.origin.x + Math.cos(spiralAngle) * r;
-        rPosArr[j3+1] = sys.origin.y + Math.sin(spiralAngle) * r;
-        rPosArr[j3+2] = sys.origin.z + (Math.random() - 0.5) * progress * 0.4;
-      }
-      sys.geometry.attributes.position.needsUpdate = true;
+    ctx.clearRect(0,0,W,H);
+    if(trail.length<2)return requestAnimationFrame(draw);
+    ctx.beginPath();ctx.moveTo(trail[0].x,trail[0].y);
+    for(var j=1;j<trail.length-1;j++){
+      var xc=(trail[j].x+trail[j+1].x)/2,yc=(trail[j].y+trail[j+1].y)/2;
+      ctx.quadraticCurveTo(trail[j].x,trail[j].y,xc,yc);
     }
+    ctx.lineTo(trail[trail.length-1].x,trail[trail.length-1].y);
+    ctx.strokeStyle='rgba(140,200,220,.5)';ctx.lineWidth=2.5;ctx.lineCap='round';
+    ctx.stroke();
+    requestAnimationFrame(draw);
   }
+  draw();
+})();
 
-  // --- CSS 涟漪 ---
-  function spawnCSSRipple(x, y) {
-    var container = document.getElementById('rippleContainer');
-    if (!container) return;
+// ============================================================
+// #34 SVG 滤镜扭曲 — 注入到页面
+// ============================================================
+(function injectSVGFilters(){
+  var svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('style','position:absolute;width:0;height:0');
+  svg.innerHTML=
+    '<defs>'+
+    '<filter id="liquidFilter">'+
+    '<feTurbulence type="fractalNoise" baseFrequency=".015" numOctaves="2" result="noise"/>'+
+    '<feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G"/>'+
+    '</filter>'+
+    '<filter id="liquidFilterHover">'+
+    '<feTurbulence type="fractalNoise" baseFrequency=".02" numOctaves="3" result="noise"/>'+
+    '<feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G"/>'+
+    '</filter>'+
+    '</defs>';
+  document.body.insertBefore(svg,document.body.firstChild);
+})();
 
-    var ring = document.createElement('div');
-    ring.className = 'ripple-ring';
-    ring.style.left = x + 'px';
-    ring.style.top = y + 'px';
-    container.appendChild(ring);
-    ring.addEventListener('animationend', function() { ring.remove(); });
+// ============================================================
+// #22 故障文字 — 定时触发
+// ============================================================
+(function initGlitchTexts(){
+  setInterval(function(){
+    document.querySelectorAll('.glitch-text').forEach(function(el){
+      if(Math.random()<.08){el.classList.add('glitching');
+        setTimeout(function(){el.classList.remove('glitching')},200+Math.random()*200)}
+    });
+  },3000);
+})();
 
-    var dot = document.createElement('div');
-    dot.className = 'ripple-dot';
-    dot.style.left = x + 'px';
-    dot.style.top = y + 'px';
-    container.appendChild(dot);
-    dot.addEventListener('animationend', function() { dot.remove(); });
+// ============================================================
+// #30 像素消散加载
+// ============================================================
+(function initPixelLoader(){
+  var overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;inset:0;z-index:10000;background:#eaf0f4;display:flex;align-items:center;justify-content:center;transition:opacity .6s,visibility .6s';
+  overlay.innerHTML='<div style="font-family:\'Noto Serif SC\',Georgia,serif;font-size:1rem;color:#4a6a80;letter-spacing:.2em;animation:pixelPulse 1.2s ease-in-out infinite">✦</div>';
+  document.body.appendChild(overlay);
+
+  var style=document.createElement('style');
+  style.textContent='@keyframes pixelPulse{0%,100%{opacity:.3;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}';
+  document.head.appendChild(style);
+
+  window.addEventListener('load',function(){
+    setTimeout(function(){overlay.style.opacity='0';overlay.style.visibility='hidden';
+      setTimeout(function(){overlay.remove()},700)},600);
+  });
+})();
+
+// #47 火花按钮（全局函数）
+window.sparkBurst = function(e){
+  var btn = e.target.closest('.btn-spark'); if(!btn) return;
+  for(var i=0;i<10;i++){
+    var p=document.createElement('span');p.className='spark-particle';
+    p.style.setProperty('--sx',(Math.random()-.5)*80+'px');
+    p.style.setProperty('--sy',(Math.random()-.5)*80+'px');
+    p.style.left='50%';p.style.top='50%';
+    btn.appendChild(p);
+    p.addEventListener('animationend',function(){p.remove()});
   }
+};
 
-  // --- 动态墨迹 Canvas ---
-  var inkCanvas = null, inkCtx = null, inkAnimId = null, inkTime = 0;
-
-  function drawInkSpots() {
-    if (!inkCtx) return;
-    var w = inkCanvas.width, h = inkCanvas.height;
-    var spots = [
-      { x: w*0.15, y: h*0.25, r: 120 },
-      { x: w*0.78, y: h*0.65, r: 100 },
-      { x: w*0.55, y: h*0.35, r: 80 },
-      { x: w*0.3, y: h*0.72, r: 90 },
-      { x: w*0.85, y: h*0.2, r: 70 },
-    ];
-    for (var i = 0; i < spots.length; i++) {
-      var s = spots[i];
-      var grad = inkCtx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r);
-      grad.addColorStop(0, 'rgba(15,18,30,0.5)');
-      grad.addColorStop(0.4, 'rgba(12,15,25,0.25)');
-      grad.addColorStop(1, 'rgba(0,0,0,0)');
-      inkCtx.fillStyle = grad;
-      inkCtx.fillRect(s.x-s.r, s.y-s.r, s.r*2, s.r*2);
-    }
-  }
-
-  function animateInk() {
-    if (!inkCtx || !inkCanvas) return;
-    inkAnimId = requestAnimationFrame(animateInk);
-    inkTime += 0.005;
-    var w = inkCanvas.width, h = inkCanvas.height;
-    inkCtx.clearRect(0, 0, w, h);
-    drawInkSpots();
-
-    inkCtx.globalAlpha = 0.15;
-    for (var i = 0; i < 3; i++) {
-      var x = w * (0.2 + 0.6 * Math.sin(inkTime*0.7 + i*2.1));
-      var y = h * (0.3 + 0.4 * Math.cos(inkTime*0.5 + i*1.7));
-      var r = 60 + 40 * Math.sin(inkTime + i);
-      var grad = inkCtx.createRadialGradient(x, y, 0, x, y, r);
-      grad.addColorStop(0, 'rgba(18,22,36,0.35)');
-      grad.addColorStop(1, 'rgba(0,0,0,0)');
-      inkCtx.fillStyle = grad;
-      inkCtx.fillRect(x-r, y-r, r*2, r*2);
-    }
-    inkCtx.globalAlpha = 1;
-  }
-
-  function initInkCanvas() {
-    inkCanvas = document.createElement('canvas');
-    inkCanvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:0.25;';
-    document.body.appendChild(inkCanvas);
-
-    function resize() {
-      inkCanvas.width = window.innerWidth;
-      inkCanvas.height = window.innerHeight;
-    }
-    resize();
-    window.addEventListener('resize', resize);
-
-    inkCtx = inkCanvas.getContext('2d');
-    drawInkSpots();
-    animateInk();
-  }
-
-  window.AZ.effects = {
-    createNebulae: createNebulae,
-    updateNebulae: updateNebulae,
-    createRippleParticles: createRippleParticles,
-    updateRippleParticles: updateRippleParticles,
-    spawnCSSRipple: spawnCSSRipple,
-    initInkCanvas: initInkCanvas,
-  };
+console.log('%c✨ FX loaded %c| %c#1~#55',
+  'color:#8ab8d0','','color:#aaa');
 })();

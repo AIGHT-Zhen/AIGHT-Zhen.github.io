@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>AIGHT-Zhen · 复古像素</title>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;font-family:'Courier New',monospace;background:#1a1a2e;color:#0f0;overflow-x:hidden}
+body{background:linear-gradient(0deg,rgba(0,255,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,0,.03) 1px,transparent 1px);background-size:20px 20px;background-color:#1a1a2e}
+.page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;gap:30px}
+.btn-back{position:fixed;top:16px;left:16px;z-index:10;width:44px;height:44px;border:3px solid;border-color:#fff #555 #555 #fff;background:#2d2d2d;color:#0f0;font-family:inherit;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;image-rendering:pixelated}
+.btn-back:active{border-color:#555 #fff #fff #555}
+.card{max-width:600px;width:100%;border:3px solid;border-color:#fff #555 #555 #fff;padding:40px 32px;text-align:center;background:#2d2d2d;box-shadow:8px 8px 0 #000}
+.name{font-size:2rem;font-weight:900;letter-spacing:.15em;color:#fff;text-shadow:3px 3px 0 #000}
+.slogan{font-size:.8rem;color:#0f0;margin-top:10px;letter-spacing:.1em}
+.divider{width:100%;border-top:2px dashed #0f0;margin:20px 0}
+.about{font-size:.75rem;color:#aaa;line-height:2}
+.links{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;justify-content:center}
+.link{color:#0f0;text-decoration:none;font-size:.7rem;border:2px solid;border-color:#fff #555 #555 #fff;padding:8px 14px;background:#2d2d2d;cursor:pointer;image-rendering:pixelated}
+.link:hover{color:#fff;background:#1a1a1a}
+.link:active{border-color:#555 #fff #fff #555}
+</style></head><body>
+<div class="page">
+  <button class="btn-back" onclick="history.back()">←</button>
+  <div class="card">
+    <h1 class="name">AIGHT-Zhen</h1>
+    <p class="slogan">星海浩瀚 · 笔墨为舟</p>
+    <div class="divider"></div>
+    <p class="about">在代码与意境之间，构筑数字山海</p>
+    <div class="links">
+      <a class="link" href="https://github.com/AIGHT-Zhen" target="_blank">[GitHub]</a>
+      <a class="link" href="mailto:aightzhen@github.com">[Email]</a>
+      <a class="link" href="../index.html">[Main]</a>
+    </div>
+  </div>
+</div>
+</body></html>

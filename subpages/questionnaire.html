@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>予我侧写</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100%;height:100%;font-family:'Noto Serif SC',Georgia,serif;color:#3a4450;-webkit-font-smoothing:antialiased;overflow:hidden;
+    background:radial-gradient(ellipse 80% 60% at 20% 15%,rgba(160,200,220,.30) 0%,transparent 55%),radial-gradient(ellipse 70% 70% at 75% 80%,rgba(180,210,225,.25) 0%,transparent 55%),linear-gradient(160deg,#f0f2f5 0%,#e8edf2 30%,#eef1f4 60%,#e5eaef 100%);background-attachment:fixed}
+  .page{width:100%;height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .btn-back{position:fixed;top:28px;left:28px;z-index:10;width:42px;height:42px;border:1px solid rgba(255,255,255,.5);border-radius:50%;background:rgba(255,255,255,.32);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer;transition:all .4s cubic-bezier(.22,.61,.36,1);box-shadow:0 2px 12px rgba(60,80,100,.06),inset 0 1px 0 rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center}
+  .btn-back::after{content:'←';font-size:1rem;color:#4a6a80}
+  .btn-back:hover{transform:scale(1.08);background:rgba(255,255,255,.45);box-shadow:0 6px 22px rgba(60,80,100,.1),inset 0 1px 0 rgba(255,255,255,.6)}
+  .blank-hint{font-size:.75rem;color:#8a9aaa;letter-spacing:.15em;font-weight:300}
+</style>
+</head>
+<body>
+<div class="page">
+  <button class="btn-back" onclick="window.history.back()"></button>
+  <p class="blank-hint">此处留白 · 待填充</p>
+</div>
+</body>
+</html>

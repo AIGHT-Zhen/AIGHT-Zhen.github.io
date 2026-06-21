@@ -1,0 +1,31 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>AIGHT-Zhen · 暗夜霓虹</title>
+<style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;font-family:'Noto Serif SC',Georgia,serif;background:#0a0a0f;color:#fff;overflow-x:hidden}
+body{background:radial-gradient(ellipse at 30% 30%,rgba(120,60,255,.08) 0%,transparent 50%),radial-gradient(ellipse at 70% 70%,rgba(255,60,120,.06) 0%,transparent 50%),#0a0a0f}
+.page{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;gap:40px}
+.btn-back{position:fixed;top:20px;left:20px;z-index:10;width:40px;height:40px;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);font-family:inherit;font-size:1rem;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(10px)}
+.btn-back:hover{border-color:rgba(255,255,255,.5);color:#fff;box-shadow:0 0 20px rgba(255,255,255,.1)}
+.card{max-width:560px;width:100%;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:52px 40px;text-align:center;background:rgba(255,255,255,.03);backdrop-filter:blur(20px);box-shadow:0 0 40px rgba(120,60,255,.1),0 0 80px rgba(255,60,120,.05)}
+.name{font-size:2.8rem;font-weight:900;letter-spacing:.15em;background:linear-gradient(135deg,#c084fc,#f472b6,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(192,132,252,.4))}
+.slogan{font-size:.9rem;color:rgba(255,255,255,.5);letter-spacing:.25em;margin-top:10px;font-weight:300}
+.divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(192,132,252,.5),transparent);margin:28px auto}
+.about{font-size:.8rem;color:rgba(255,255,255,.45);line-height:2.2;font-weight:300}
+.links{display:flex;gap:16px;margin-top:20px;flex-wrap:wrap;justify-content:center}
+.link{color:rgba(255,255,255,.5);text-decoration:none;font-size:.75rem;letter-spacing:.15em;border:1px solid rgba(255,255,255,.12);padding:10px 20px;border-radius:20px;transition:all .3s;backdrop-filter:blur(8px)}
+.link:hover{border-color:rgba(192,132,252,.5);color:#fff;box-shadow:0 0 20px rgba(192,132,252,.15)}
+</style></head><body>
+<div class="page">
+  <button class="btn-back" onclick="history.back()">←</button>
+  <div class="card">
+    <h1 class="name">AIGHT-Zhen</h1>
+    <p class="slogan">星海浩瀚 · 笔墨为舟</p>
+    <div class="divider"></div>
+    <p class="about">在代码与意境之间，构筑数字山海</p>
+    <div class="links">
+      <a class="link" href="https://github.com/AIGHT-Zhen" target="_blank">GitHub</a>
+      <a class="link" href="mailto:aightzhen@github.com">Email</a>
+      <a class="link" href="../index.html">主页</a>
+    </div>
+  </div>
+</div>
+</body></html>
