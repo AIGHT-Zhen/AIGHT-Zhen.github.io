@@ -1,0 +1,296 @@
+/* ============================================================
+   ink.css — 水墨风视觉元素：墨迹叠加、山水剪影、涟漪、彩蛋
+   AIGHT-Zhen | 星海浩瀚 · 笔墨为舟
+   ============================================================ */
+
+/* -------- 墨迹叠加层 -------- */
+.ink-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.38;
+  overflow: hidden;
+}
+
+.ink-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(55px);
+  will-change: transform;
+}
+
+.ink-blob:nth-child(1) {
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle at 40% 40%,
+    rgba(15, 20, 40, 0.7) 0%,
+    rgba(12, 16, 32, 0.4) 40%,
+    transparent 70%);
+  top: -12%;
+  left: -8%;
+  animation: inkDrift1 15s ease-in-out infinite;
+}
+
+.ink-blob:nth-child(2) {
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle at 55% 45%,
+    rgba(22, 26, 44, 0.55) 0%,
+    rgba(16, 20, 36, 0.3) 45%,
+    transparent 70%);
+  bottom: -10%;
+  right: -10%;
+  animation: inkDrift2 17s ease-in-out infinite;
+}
+
+.ink-blob:nth-child(3) {
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(14, 18, 34, 0.6) 0%,
+    rgba(10, 14, 26, 0.35) 40%,
+    transparent 70%);
+  top: 52%;
+  left: 58%;
+  animation: inkDrift3 19s ease-in-out infinite;
+}
+
+.ink-blob:nth-child(4) {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle at 35% 55%,
+    rgba(26, 22, 34, 0.45) 0%,
+    rgba(18, 16, 28, 0.2) 45%,
+    transparent 70%);
+  top: 28%;
+  left: 12%;
+  animation: inkDrift1 13s ease-in-out infinite reverse;
+}
+
+@keyframes inkDrift1 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translate(35px, -22px) scale(1.06) rotate(0.5deg);
+  }
+  50% {
+    transform: translate(-12px, 28px) scale(0.94) rotate(-0.3deg);
+  }
+  75% {
+    transform: translate(-28px, -16px) scale(1.04) rotate(0.2deg);
+  }
+}
+
+@keyframes inkDrift2 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translate(-28px, 18px) scale(1.05) rotate(-0.4deg);
+  }
+  50% {
+    transform: translate(20px, -25px) scale(0.93) rotate(0.3deg);
+  }
+  75% {
+    transform: translate(15px, 30px) scale(1.03) rotate(-0.2deg);
+  }
+}
+
+@keyframes inkDrift3 {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(25px, -30px) scale(1.07);
+  }
+  66% {
+    transform: translate(-30px, 15px) scale(0.92);
+  }
+}
+
+/* -------- SVG 山水剪影 -------- */
+.mountain-decor {
+  position: fixed;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+.mountain-decor.bottom-left {
+  bottom: 0;
+  left: 0;
+  width: 340px;
+  height: 220px;
+}
+
+.mountain-decor.top-right {
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 200px;
+  transform: scaleX(-1);
+  opacity: 0.07;
+}
+
+.mountain-decor svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* 山峦呼吸动画 */
+.mountain-decor.bottom-left svg path {
+  animation: mountainShift 10s ease-in-out infinite;
+}
+.mountain-decor.bottom-left svg path:nth-child(2) {
+  animation-delay: -3s;
+}
+.mountain-decor.bottom-left svg path:nth-child(3) {
+  animation-delay: -6s;
+}
+
+@keyframes mountainShift {
+  0%, 100% {
+    d: path('M0 200 L0 120 L45 75 L80 100 L130 40 L175 85 L220 50 L260 90 L320 55 L320 200Z');
+  }
+  50% {
+    d: path('M0 200 L0 115 L45 70 L80 105 L130 35 L175 90 L220 45 L260 95 L320 50 L320 200Z');
+  }
+}
+
+/* -------- 涟漪容器 -------- */
+.ripple-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.ripple-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(170, 200, 220, 0.5);
+  box-shadow:
+    0 0 6px rgba(160, 200, 220, 0.2),
+    inset 0 0 6px rgba(160, 200, 220, 0.1);
+  animation: rippleExpand 1.8s var(--ease-ink) forwards;
+  pointer-events: none;
+}
+
+.ripple-ring:nth-child(odd) {
+  border-color: rgba(180, 200, 210, 0.35);
+}
+
+@keyframes rippleExpand {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    width: 420px;
+    height: 420px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* 涟漪墨点（中心小圆） */
+.ripple-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+    rgba(180, 210, 230, 0.5) 0%,
+    rgba(160, 200, 220, 0.2) 40%,
+    transparent 70%);
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, -50%) scale(0);
+  animation: rippleDot 1.2s var(--ease-out-expo) forwards;
+  pointer-events: none;
+}
+
+@keyframes rippleDot {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.8;
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(1.8);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* -------- 彩蛋提示浮层 -------- */
+.easter-egg-flash {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-calligraphy);
+  font-size: 1.3rem;
+  color: var(--gold-warm);
+  letter-spacing: 0.25em;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  text-shadow:
+    0 0 30px rgba(200, 160, 60, 0.7),
+    0 0 60px rgba(200, 150, 40, 0.35),
+    0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+.easter-egg-flash.show {
+  opacity: 1;
+  animation: flashText 2s ease-out forwards;
+}
+
+@keyframes flashText {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.75);
+    filter: blur(4px);
+  }
+  25% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.06);
+    filter: blur(0px);
+  }
+  70% {
+    opacity: 0.7;
+    transform: translate(-50%, -50%) scale(1);
+    filter: blur(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.02);
+    filter: blur(6px);
+  }
+}
+
+/* 粒子色移指示器（四周微光） */
+.color-shift-indicator {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  box-shadow: inset 0 0 120px rgba(210, 160, 60, 0.08);
+}
+.color-shift-indicator.active {
+  opacity: 1;
+}

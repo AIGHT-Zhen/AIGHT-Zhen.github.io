@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AIGHT-Zhen | 星海浩瀚 · 笔墨为舟</title>
+<meta name="description" content="AIGHT-Zhen - 在数字星海中，用笔墨勾勒山海的轮廓。科技是手段，意境是归宿。">
+<meta name="theme-color" content="#060a14">
+<meta name="color-scheme" content="dark">
+
+<!-- Preconnect for Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- Google Fonts: Noto Serif SC (思源宋体) -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/ink.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<!-- ============================================================
+     Layer 0: Three.js Particle Canvas (Background)
+     ============================================================ -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- ============================================================
+     Layer 1: Ink Overlay
+     ============================================================ -->
+<div class="ink-overlay" aria-hidden="true">
+  <div class="ink-blob"></div>
+  <div class="ink-blob"></div>
+  <div class="ink-blob"></div>
+  <div class="ink-blob"></div>
+</div>
+
+<!-- ============================================================
+     Layer 2: SVG Mountain Silhouettes
+     ============================================================ -->
+<div class="mountain-decor bottom-left" aria-hidden="true">
+  <svg viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 200 L0 120 L45 75 L80 100 L130 40 L175 85 L220 50 L260 90 L320 55 L320 200Z"
+          fill="rgba(20,25,40,0.6)" stroke="rgba(100,130,160,0.15)" stroke-width="0.5"/>
+    <path d="M0 200 L0 140 L60 100 L110 125 L160 70 L210 110 L270 65 L320 95 L320 200Z"
+          fill="rgba(15,18,30,0.4)"/>
+    <path d="M0 200 L0 165 L50 130 L100 155 L180 105 L250 145 L320 120 L320 200Z"
+          fill="rgba(10,12,22,0.5)"/>
+  </svg>
+</div>
+<div class="mountain-decor top-right" aria-hidden="true">
+  <svg viewBox="0 0 260 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M260 0 L260 55 L220 80 L180 50 L140 90 L95 55 L50 85 L0 40 L0 0Z"
+          fill="rgba(25,20,35,0.4)" stroke="rgba(100,130,160,0.1)" stroke-width="0.5"/>
+    <path d="M260 0 L260 35 L210 60 L160 30 L110 65 L60 35 L0 60 L0 0Z"
+          fill="rgba(20,16,28,0.35)"/>
+  </svg>
+</div>
+
+<!-- ============================================================
+     Layer 4: Color Shift Indicator (Easter Egg)
+     ============================================================ -->
+<div class="color-shift-indicator" aria-hidden="true"></div>
+
+<!-- ============================================================
+     Layer 10: Ripple Container
+     ============================================================ -->
+<div class="ripple-container" id="rippleContainer" aria-hidden="true"></div>
+
+<!-- ============================================================
+     Layer 100: Easter Egg Flash Text
+     ============================================================ -->
+<div class="easter-egg-flash" id="easterEggFlash" aria-live="polite"></div>
+
+<!-- ============================================================
+     Hero Section
+     ============================================================ -->
+<section class="section hero-section" id="home">
+  <div class="hero-content">
+    <div class="hero-name-wrapper" data-text="AIGHT-Zhen">
+      <h1 class="hero-name">AIGHT-Zhen</h1>
+    </div>
+    <p class="hero-slogan">星海浩瀚 · 笔墨为舟</p>
+    <p class="hero-subtitle">在代码与意境之间，构筑数字山海</p>
+  </div>
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <span>向下探索</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     About Section
+     ============================================================ -->
+<section class="section about-section" id="about">
+  <div class="about-backdrop" aria-hidden="true"></div>
+  <div class="about-content">
+    <p class="about-label">· 关 于 ·</p>
+    <p class="about-text">
+      目标<span class="emph">全栈开发者</span>！
+    </p>
+    <div class="about-divider"></div>
+    <a href="https://github.com/AIGHT-Zhen" target="_blank" rel="noopener" class="about-entry">
+      探索项目 →
+    </a>
+  </div>
+</section>
+
+<!-- ============================================================
+     Footer / Contact Section
+     ============================================================ -->
+<section class="section footer-section" id="contact">
+  <div class="footer-content">
+    <div class="footer-links">
+      <a href="https://github.com/AIGHT-Zhen" target="_blank" rel="noopener" class="footer-link">GitHub</a>
+      <a href="mailto:aightzhen@github.com" class="footer-link">邮箱</a>
+      <a href="#home" class="footer-link">回到顶部</a>
+    </div>
+    <p class="footer-motto">「在数字星海中，用笔墨勾勒山海的轮廓。科技是手段，意境是归宿。」</p>
+    <p class="footer-copy">&copy; 2026 AIGHT-Zhen</p>
+  </div>
+</section>
+
+<!-- ============================================================
+     JavaScript — 按依赖顺序加载（支持 file:// 协议）
+     ============================================================ -->
+<!-- Three.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.157.0/build/three.min.js"></script>
+<!-- 配置与工具 -->
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<!-- Three.js 场景 -->
+<script src="js/scene.js"></script>
+<!-- 粒子系统 -->
+<script src="js/particles.js"></script>
+<!-- 视觉特效 -->
+<script src="js/effects.js"></script>
+<!-- 交互系统 -->
+<script src="js/interactions.js"></script>
+<!-- 键盘彩蛋 -->
+<script src="js/easter-egg.js"></script>
+<!-- 主入口 -->
+<script src="js/main.js"></script>
+
+</body>
+</html>
