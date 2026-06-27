@@ -2,189 +2,249 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>星海浩瀚 · 笔墨为舟</title>
-<meta name="description" content="AIGHT-Zhen - 个人主页">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>星海浩瀚 · 笔墨为舟 — AIGHT-Zhen</title>
+<meta name="description" content="AIGHT-Zhen 个人主页 — 在代码与意境之间，构筑数字山海">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
-<!-- #33 变形水滴装饰 -->
-<div class="blob-decor a"></div>
-<div class="blob-decor b"></div>
-<div class="blob-decor c"></div>
+<!-- 星空画布 -->
+<canvas id="starfield" aria-hidden="true"></canvas>
 
-<!-- #10 动态雾效 -->
-<div class="fog-layer"></div>
+<!-- 大气光晕 -->
+<div class="atmosphere atmosphere-a" aria-hidden="true"></div>
+<div class="atmosphere atmosphere-b" aria-hidden="true"></div>
+<div class="atmosphere atmosphere-c" aria-hidden="true"></div>
 
-<div class="transition-overlay" id="transitionOverlay"></div>
+<!-- 页面过渡层 -->
+<div class="transition-overlay" id="transitionOverlay" aria-hidden="true"></div>
 
-<main class="scroll-container" id="scrollContainer">
+<main class="main-scroll" id="mainScroll">
 
-  <!-- ========== 第一屏：引子 ========== -->
-  <section class="screen hero-screen" id="screen1">
-    <!-- #11 3D倾斜 + #12 液态玻璃 -->
-    <div class="glass-card tilt-card hero-card">
-      <span class="fx-badge">#11 #12</span>
-      <!-- #20 墨迹显现 -->
-      <h1 class="slogan">星海浩瀚 · 笔墨为舟</h1>
-      <!-- #24 彩虹流动 -->
-      <p class="slogan-sub">在代码与意境之间，构筑数字山海</p>
-    </div>
-    <div class="scroll-hint">
-      <span>向下探索</span>
-      <div class="scroll-arrow"></div><!-- #23 渐隐呼吸 -->
-    </div>
-  </section>
+  <!-- ========== 第一屏：Hero ========== -->
+  <section class="screen screen-hero" id="hero">
 
-  <!-- ========== 第二屏：风格入口 4x3 ========== -->
-  <section class="screen about-screen" id="screen2">
-    <div class="style-grid">
-    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
-      <span class="fx-badge">#11 #12</span>
-      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">赛博朋克</p>
-      <button class="btn-jump" data-href="subpages/cyberpunk.html"></button>
-    </div>
-    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
-      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">粗野主义</p>
-      <button class="btn-jump" data-href="subpages/brutalist.html"></button>
-    </div>
-    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
-      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">复古像素</p>
-      <button class="btn-jump" data-href="subpages/retro.html"></button>
-    </div>
-    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
-      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">极致留白</p>
-      <button class="btn-jump" data-href="subpages/minimal.html"></button>
-    </div>
-    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
-      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">暗夜霓虹</p>
-      <button class="btn-jump" data-href="subpages/neon.html"></button>
-    </div>
-    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
-      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">全息投影</p>
-      <button class="btn-jump" data-href="subpages/hologram.html"></button>
-    </div>
-    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
-      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">报纸编辑</p>
-      <button class="btn-jump" data-href="subpages/newspaper.html"></button>
-    </div>
-    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
-      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">梦幻粉彩</p>
-      <button class="btn-jump" data-href="subpages/pastel.html"></button>
-    </div>
-    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
-      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">工业暗黑</p>
-      <button class="btn-jump" data-href="subpages/industrial.html"></button>
-    </div>
-    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
-      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">装饰艺术</p>
-      <button class="btn-jump" data-href="subpages/artdeco.html"></button>
-    </div>
-    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
-      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">手绘素描</p>
-      <button class="btn-jump" data-href="subpages/sketch.html"></button>
-    </div>
-    <div class="glass-card tilt-card" style="padding:20px 18px;text-align:center;min-width:100px">
-      <p style="font-size:.65rem;color:#3a5868;letter-spacing:.12em;margin-bottom:10px">终端命令行</p>
-      <button class="btn-jump" data-href="subpages/terminal.html"></button>
-    </div>
-    </div>
-  </section>
+    <!-- 主视觉卡片 -->
+    <div class="hero-card glass-card tilt-card">
+      <div class="hero-card-shine" aria-hidden="true"></div>
 
-  <!-- ========== 第三屏：特效展示区 ========== -->
-  <section class="screen fx-showcase" id="screen3" style="flex-direction:column;gap:12px">
+      <!-- 徽标 -->
+      <div class="hero-emblem">
+        <svg class="emblem-star" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 2l2.5 7.5H22l-6 4.5 2.5 7.5L12 17l-6.5 4.5L8 14l-6-4.5h7.5L12 2z" fill="currentColor"/>
+        </svg>
+        <span class="emblem-text">AIGHT · ZHEN</span>
+      </div>
 
-    <!-- 原有效果 -->
-    <div class="glass-card" style="max-width:700px;padding:28px 36px;text-align:center">
-      <p style="font-size:.75rem;color:#4a6a80;letter-spacing:.15em;margin-bottom:16px">#16~#34 原有效果</p>
-      <button class="btn-fill" style="margin:4px">#16 液面填充</button>
-      <button class="btn-aurora" style="margin:4px">#17 极光按钮</button>
-      <button class="btn-glitch" data-text="#18 故障效果" style="margin:4px">#18 故障效果</button>
-      <span class="typewriter" style="display:inline-block;font-size:.78rem;color:#6b8a9a;vertical-align:middle;margin:0 8px">#21 打字机...</span>
-      <span class="glitch-text" data-text="#22 故障文字" style="font-size:.78rem;color:#6b8a9a;margin:0 8px">#22 故障文字</span>
-      <span class="svg-distort" style="font-size:.78rem;color:#6b8a9a;margin:0 8px;display:inline-block">#34 SVG扭曲</span>
-    </div>
+      <!-- 主标题 -->
+      <h1 class="hero-title">星海浩瀚 · 笔墨为舟</h1>
 
-    <!-- ====== 新风格特效 #36-#55 ====== -->
+      <!-- 副标题 -->
+      <p class="hero-subtitle">在代码与意境之间，构筑数字山海</p>
 
-    <!-- #36 赛博朋克 -->
-    <div class="card-cyberpunk" style="max-width:400px;text-align:center">
-      <span class="fx-badge" style="color:#0ff">#36</span>
-      CYBERPUNK NEON CARD
-      <p style="font-size:.65rem;opacity:.7;margin-top:6px;text-transform:none;letter-spacing:.05em">赛博朋克霓虹卡片 · 荧光脉冲</p>
-    </div>
+      <!-- 分隔线 -->
+      <div class="hero-divider" aria-hidden="true">
+        <span class="divider-dot"></span>
+      </div>
 
-    <!-- #37 粗野主义 -->
-    <div style="background:#f0f0f0;padding:20px;border-radius:0;max-width:400px;text-align:center">
-      <span class="fx-badge" style="color:#111">#37</span>
-      <span class="text-brutalist" style="font-size:1.4rem">BRUTALIST</span>
-      <p style="font-size:.6rem;color:#555;margin-top:6px">粗野主义文字 · 黄底黑框硬阴影</p>
-    </div>
+      <!-- 引导文字 -->
+      <p class="hero-desc">探索十二种视觉风格，每一页都是一次设计实验</p>
 
-    <!-- #38 复古像素 -->
-    <div style="background:#111;padding:20px;border-radius:0;max-width:400px;text-align:center">
-      <span class="fx-badge" style="color:#0f0">#38</span>
-      <button class="btn-retro">PIXEL BUTTON</button>
-      <p style="font-size:.6rem;color:#0f0;margin-top:6px;font-family:'Courier New',monospace">复古像素按钮 · 仿Win95凸起边框</p>
-    </div>
-
-    <!-- #39 刮刮卡 -->
-    <div style="background:#fafafa;padding:16px;border-radius:8px;max-width:400px;text-align:center">
-      <span class="fx-badge">#39</span>
-      <div class="scratch-card" onclick="this.classList.toggle('scratched')">
-        <span class="hidden">🎁 你发现了秘密！</span>
-        <div class="cover">点击刮开</div>
+      <!-- CTA 箭头 -->
+      <div class="hero-cta" aria-hidden="true">
+        <span class="cta-text">浏览风格</span>
+        <svg class="cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
       </div>
     </div>
 
-    <!-- #40 魔法棒 -->
-    <div style="background:#1a1a2e;padding:20px;border-radius:12px;max-width:400px;text-align:center">
-      <span class="fx-badge" style="color:#f0f">#40</span>
-      <span class="magic-hover" style="color:#ccc">✨ 悬停我 ✨</span>
-      <p style="font-size:.6rem;color:#888;margin-top:6px">魔法棒悬停 · 彩虹旋转光晕</p>
+    <!-- 背景装饰文字 -->
+    <div class="hero-bg-text" aria-hidden="true">星海</div>
+
+  </section>
+
+  <!-- ========== 第二屏：风格画廊 ========== -->
+  <section class="screen screen-gallery" id="gallery">
+    <div class="gallery-header">
+      <h2 class="section-title">风格画廊</h2>
+      <p class="section-subtitle">十二种设计语言 · 点击探索</p>
+      <div class="section-divider" aria-hidden="true"></div>
     </div>
 
-    <!-- #41 页面卷角 -->
-    <div class="corner-curl" style="max-width:400px;text-align:center">
-      <span class="fx-badge">#41</span>
-      <p style="font-size:.8rem;color:#555">页面卷角效果</p>
-      <p style="font-size:.6rem;color:#999">悬停时右下角卷起更多</p>
-    </div>
+    <div class="gallery-grid">
 
-    <!-- #43 黏糊糊 + #44 3D波浪 + #45 霓虹开关 + #47 火花 -->
-    <div class="glass-card" style="max-width:500px;padding:24px;text-align:center">
-      <p style="font-size:.7rem;color:#4a6a80;letter-spacing:.1em;margin-bottom:14px">#43 #44 #45 #47 #50</p>
-      <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap">
-        <button class="btn-gooey">#43 黏糊糊</button>
-        <div class="wave-3d">
-          <span style="--d:0s"></span><span style="--d:.15s"></span><span style="--d:.3s"></span>
-          <span style="--d:.45s"></span><span style="--d:.6s"></span>
+      <!-- 赛博朋克 -->
+      <a href="subpages/cyberpunk.html" class="gallery-card tilt-card" data-style="cyberpunk">
+        <span class="card-number">01</span>
+        <div class="card-preview cyberpunk-preview" aria-hidden="true">
+          <span class="preview-glitch">010101</span>
         </div>
-        <div class="toggle-neon on" style="flex-shrink:0" onclick="this.classList.toggle('on')"></div>
-        <button class="btn-spark" onclick="sparkBurst(event)">#47 火花</button>
-        <div class="pulse-ring"><span style="font-size:.55rem;color:#4a6a80">#50</span></div>
+        <h3 class="card-title">赛博朋克</h3>
+        <p class="card-desc">霓虹脉冲 · 荧光暗夜</p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <!-- 粗野主义 -->
+      <a href="subpages/brutalist.html" class="gallery-card tilt-card" data-style="brutalist">
+        <span class="card-number">02</span>
+        <div class="card-preview brutalist-preview" aria-hidden="true">
+          <span class="preview-block">■</span>
+        </div>
+        <h3 class="card-title">粗野主义</h3>
+        <p class="card-desc">硬朗结构 · 原始力量</p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <!-- 复古像素 -->
+      <a href="subpages/retro.html" class="gallery-card tilt-card" data-style="retro">
+        <span class="card-number">03</span>
+        <div class="card-preview retro-preview" aria-hidden="true">
+          <span class="preview-pixel">█▓▒░</span>
+        </div>
+        <h3 class="card-title">复古像素</h3>
+        <p class="card-desc">bit 美学 · Win95 记忆</p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <!-- 极致留白 -->
+      <a href="subpages/minimal.html" class="gallery-card tilt-card" data-style="minimal">
+        <span class="card-number">04</span>
+        <div class="card-preview minimal-preview" aria-hidden="true">
+          <span class="preview-circle"></span>
+        </div>
+        <h3 class="card-title">极致留白</h3>
+        <p class="card-desc">少即是多 · 呼吸之美</p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <!-- 暗夜霓虹 -->
+      <a href="subpages/neon.html" class="gallery-card tilt-card" data-style="neon">
+        <span class="card-number">05</span>
+        <div class="card-preview neon-preview" aria-hidden="true">
+          <span class="preview-glow"></span>
+        </div>
+        <h3 class="card-title">暗夜霓虹</h3>
+        <p class="card-desc">午夜光影 · 流光溢彩</p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <!-- 全息投影 -->
+      <a href="subpages/hologram.html" class="gallery-card tilt-card" data-style="hologram">
+        <span class="card-number">06</span>
+        <div class="card-preview hologram-preview" aria-hidden="true">
+          <span class="preview-scan"></span>
+        </div>
+        <h3 class="card-title">全息投影</h3>
+        <p class="card-desc">虚实交织 · 未来视界</p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <!-- 报纸编辑 -->
+      <a href="subpages/newspaper.html" class="gallery-card tilt-card" data-style="newspaper">
+        <span class="card-number">07</span>
+        <div class="card-preview newspaper-preview" aria-hidden="true">
+          <span class="preview-lines"></span>
+        </div>
+        <h3 class="card-title">报纸编辑</h3>
+        <p class="card-desc">排版之美 · 墨香纸韵</p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <!-- 梦幻粉彩 -->
+      <a href="subpages/pastel.html" class="gallery-card tilt-card" data-style="pastel">
+        <span class="card-number">08</span>
+        <div class="card-preview pastel-preview" aria-hidden="true">
+          <span class="preview-dot"></span>
+        </div>
+        <h3 class="card-title">梦幻粉彩</h3>
+        <p class="card-desc">柔和色调 · 甜美梦境</p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <!-- 工业暗黑 -->
+      <a href="subpages/industrial.html" class="gallery-card tilt-card" data-style="industrial">
+        <span class="card-number">09</span>
+        <div class="card-preview industrial-preview" aria-hidden="true">
+          <span class="preview-rivet"></span>
+        </div>
+        <h3 class="card-title">工业暗黑</h3>
+        <p class="card-desc">钢铁质感 · 暗夜工厂</p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <!-- 装饰艺术 -->
+      <a href="subpages/artdeco.html" class="gallery-card tilt-card" data-style="artdeco">
+        <span class="card-number">10</span>
+        <div class="card-preview artdeco-preview" aria-hidden="true">
+          <span class="preview-geo"></span>
+        </div>
+        <h3 class="card-title">装饰艺术</h3>
+        <p class="card-desc">几何奢华 · 黄金年代</p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <!-- 手绘素描 -->
+      <a href="subpages/sketch.html" class="gallery-card tilt-card" data-style="sketch">
+        <span class="card-number">11</span>
+        <div class="card-preview sketch-preview" aria-hidden="true">
+          <span class="preview-hatch"></span>
+        </div>
+        <h3 class="card-title">手绘素描</h3>
+        <p class="card-desc">随性线条 · 纸上温度</p>
+        <span class="card-arrow">→</span>
+      </a>
+
+      <!-- 终端命令行 -->
+      <a href="subpages/terminal.html" class="gallery-card tilt-card" data-style="terminal">
+        <span class="card-number">12</span>
+        <div class="card-preview terminal-preview" aria-hidden="true">
+          <span class="preview-cursor">_</span>
+        </div>
+        <h3 class="card-title">终端命令行</h3>
+        <p class="card-desc">CLI 之美 · 极客浪漫</p>
+        <span class="card-arrow">→</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ========== 第三屏：关于 ========== -->
+  <section class="screen screen-about" id="about">
+    <div class="about-card glass-card">
+      <h2 class="section-title">关于此站</h2>
+      <div class="section-divider" aria-hidden="true"></div>
+      <p class="about-text">
+        这里是一个数字创意的实验场——用纯 CSS 与 JavaScript 探索视觉风格的边界。<br>
+        从赛博朋克的霓虹脉冲，到极致留白的呼吸之美；<br>
+        从粗野主义的硬朗结构，到全息投影的虚实交织。<br>
+        每一种风格，都是一次对<span class="text-highlight">"设计可能性"</span>的追问。
+      </p>
+      <p class="about-quote">— 星海无垠，笔墨不息</p>
+
+      <div class="about-links">
+        <a href="subpages/questionnaire.html" class="about-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M9 12h6M9 16h6M9 8h6M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"/>
+          </svg>
+          风格问答
+        </a>
+        <a href="https://github.com/AIGHT-Zhen" class="about-link" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          GitHub
+        </a>
       </div>
     </div>
 
-    <!-- #48 单词裂开 + #51 全息 + #52 热感 + #53 彩虹 + #54 水墨 + #49 齿轮 -->
-    <div class="glass-card" style="max-width:550px;padding:24px;text-align:center">
-      <p style="font-size:.7rem;color:#4a6a80;letter-spacing:.1em;margin-bottom:14px">#48 #49 #51 #52 #53 #54</p>
-      <div style="display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap">
-        <span class="split-word">
-          <span class="split-char" style="animation-delay:0s">S</span><span class="split-char" style="animation-delay:.05s">P</span><span class="split-char" style="animation-delay:.1s">L</span><span class="split-char" style="animation-delay:.15s">I</span><span class="split-char" style="animation-delay:.2s">T</span>
-        </span>
-        <div class="css-gear"></div>
-        <div class="card-hologram" style="padding:14px 18px"><span style="font-size:.7rem;color:#889">#51 全息</span></div>
-        <span class="heat-distort" style="font-size:.85rem;color:#c44">#52 热感扭曲</span>
-        <span class="rainbow-mask" style="font-size:1.1rem">#53 彩虹</span>
-        <span class="ink-drop" style="font-size:.8rem;color:#555">#54 水墨滴</span>
-      </div>
-    </div>
-
+    <footer class="site-footer">
+      <p>© 2025 AIGHT-Zhen · 由好奇心驱动</p>
+    </footer>
   </section>
 
 </main>

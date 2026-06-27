@@ -1,5 +1,5 @@
 /* ============================================================
-   scroll-snap.js — 自由滚动 + 视差控制
+   scroll-snap.js — 滚动管理 + 视差
    ============================================================ */
 window.ScrollSnap = (function() {
   'use strict';
@@ -22,7 +22,7 @@ window.ScrollSnap = (function() {
     var scrollTop = container.scrollTop;
     var vh = container.clientHeight;
 
-    // 当前屏索引（用于外部查询，不影响滚动行为）
+    /* 计算当前屏索引 */
     var screens = container.querySelectorAll('.screen');
     for (var i = 0; i < screens.length; i++) {
       var s = screens[i];
@@ -34,7 +34,7 @@ window.ScrollSnap = (function() {
       }
     }
 
-    // 视差偏移
+    /* 视差偏移 */
     for (var j = 0; j < parallaxBgs.length; j++) {
       var bg = parallaxBgs[j];
       var screenEl = bg.closest('.screen');
@@ -52,6 +52,6 @@ window.ScrollSnap = (function() {
 
   return {
     init: init,
-    getCurrentScreen: function() { return currentScreen; },
+    getCurrentScreen: function() { return currentScreen; }
   };
 })();
